@@ -5,7 +5,15 @@ export default class Key extends Component {
       <div className="auth-wrapper">
           <div className="auth-inner">
       <form>
-        <h3>Configure API Key</h3>
+        <h3>Configure API Keys</h3>
+        <div className="mb-3">
+          <label>Public Key</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Public API Key"
+          />
+        </div>
         <div className="mb-3">
           <label>Private Key</label>
           <input
