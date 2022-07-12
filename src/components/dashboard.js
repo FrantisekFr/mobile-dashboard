@@ -32,9 +32,9 @@ export default class Dashboard extends Component {
   render() {
       
     return (
-      <div className="auth-wrapper">
+      <div className="auth-wrapper dashboard">
         <div className="auth-inner auth-inner-dashboard">
-          <div className="dashboard">
+          <div className="">
               <nav className="navbar navbar-expand dashboard-navbar">
                 <div className="container-fluid">
                 <ul className="navbar-nav">
