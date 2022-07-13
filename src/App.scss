@@ -64,9 +64,21 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 // Dashboard
+.nav-item a{
+  color: white!important;
+}
 
-.dashboard {
-  
+#dashboard-navbar .nav-item a {
+  color: #232426!important;  
+}
+
+#dashboard-navbar .navbar-nav .active-tab {
+  background: #232426;
+  border-radius:25px;
+}
+
+#dashboard-navbar .navbar-nav .active-tab .nav-link {
+  color:white!important;
 }
 
 .auth-inner-dashboard {
@@ -75,13 +87,17 @@ body, html, .App, #root, .auth-wrapper {
   padding: 55px 0px 0px 0px;
 }
 
-.dashboard-navbar .nav-item a {
-  color: #232426;  
+.dashboard-navbar {
+  background-color: #FFFAF3;
+  width: 100%;
 }
 
-.dashboard-navbar {
-  background-color: #91979F;
-  width: 100%;
+#dashboard-navbar .navbar-nav .nav-link {
+  color: black;
+}
+
+.campaign {
+  padding-top: 10px;
 }
 
 .accordion-button {
@@ -90,21 +106,22 @@ body, html, .App, #root, .auth-wrapper {
   border-color: #232426!important;    
 }
 
+.activity-container{
+  padding-top: 10px;
+}
 
+.activity-container .accordion-item {
+  margin-bottom: 10px;
+}
 
 // Overwrites 
-.active-tab {
-  background: #232426;
-  color: white!important;
-}
+
 
 .navbar-light {
   background-color: #232426;
 }
 
-.nav-item a{
-  color: white!important;
-}
+
 
 .btn-primary {
   background-color: #232426;

@@ -35,8 +35,8 @@ export default class Dashboard extends Component {
       <div className="auth-wrapper dashboard">
         <div className="auth-inner auth-inner-dashboard">
           <div className="">
-              <nav className="navbar navbar-expand dashboard-navbar">
-                <div className="container-fluid">
+              <nav className="navbar navbar-expand dashboard-navbar" id="dashboard-navbar">
+                <div className="container">
                 <ul className="navbar-nav">
                   <li className={"nav-item" + (this.state.campaignsVisible ? " active-tab" : "")}>
                     <a className="nav-link" href="" onClick={this.showCampaigns}>Campaigns</a>

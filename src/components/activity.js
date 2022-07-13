@@ -4,6 +4,7 @@ import Accordion from 'react-bootstrap/Accordion';
 export default class Activity extends Component {
   render() {
     return (
+      <div className="container activity-container">
        <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
         <Accordion.Header>User 1</Accordion.Header>
@@ -30,6 +31,7 @@ export default class Activity extends Component {
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
+    </div>
     )
   }
 }
