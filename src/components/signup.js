@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import {Form, Input, FormFeedback} from 'reactstrap';
+import {Form, Button, FormText, Input, FormFeedback} from 'reactstrap';
 import {storageSave, storageLoad} from "../storage";
 
 export default class SignUp extends Component {
@@ -8,7 +8,8 @@ export default class SignUp extends Component {
   state = {    
     email: "",
     password: "",        
-    emailValid: false
+    emailValid: false,
+    failedRegistration: false
   }
 
   validateEmail = (e) => {     
@@ -23,29 +24,31 @@ export default class SignUp extends Component {
   }
 
   handlePasswordInput = (e) => {    
-    if (e.target.value.length > 1){
-      this.setState({password: e.target.value, passwordValid: true})
-    } else{
-      this.setState({password: e.target.value, passwordValid: false})
-    }
+    this.setState({password: e.target.value}) 
   }
 
   submitRegistrationForm = (event) => {
     event.preventDefault();
     axios({
       method: 'POST',
-      url: 'www.placeholder.com',
+      url: 'http://localhost:3000/auth/signup',
       data: {        
         email: this.state.email,
         password: this.state.password
+        }
+      }
+    )
+    .then(response => {      
+      alert(response)
+      if(response.error){
+        this.state({ failedRegistration: true, email: '', password: '' })
+      } else {
+        storageSave('klaviyoUser', response.data)  
+        this.props.toggle()
       }
     })
-    .then(response => {
-      if(response.data.status == "success")      
-      storageSave('klaviyoJWT', response.data.auth_token)
-    })
     .catch(error => {
-      console.error(error.response) 
+      console.error(error.response)
     })  
   }
 
@@ -53,7 +56,7 @@ export default class SignUp extends Component {
     return (
       <div className="auth-wrapper">
           <div className="auth-inner">
-      <Form>
+      <Form onSubmit={this.submitRegistrationForm}>
         <h3>Sign Up</h3>        
         <div className="mb-3">
           <label>Email address</label>
@@ -67,22 +70,27 @@ export default class SignUp extends Component {
               this.state.emailValid ? {valid: true} : {invalid: true} : "")}                  
             />     
           <FormFeedback{...(this.state.email.length > 0 ? 
-                     this.state.emailValid ? {valid: true} : {invalid: true} : "")}>{this.state.emailValid ? "Valid email" : "Invalid email format"}</FormFeedback>
+                     this.state.emailValid ? {valid: true} : {invalid: true} : "")}>{this.state.emailValid ? "Valid email format" : "Invalid email format"}</FormFeedback>
         </div>
         <div className="mb-3">
           <label>Password</label>
           <Input
             type="password"
             className="form-control"
+            value={this.state.password}
+            onChange={e => this.handlePasswordInput(e)}  
             placeholder="Enter password"
           />
         </div>
-        <div className="d-grid">
-          <a href="/configure-key" className="btn btn-primary">
-           Submit</a>
+        <div>
+          <Button {...(this.state.email !== "" && this.state.password !== "" && this.state.emailValid? {enabled: true} : {disabled: true}) } type="submit">Submit</Button>                    
         </div>
+        <div className="row">
+          {this.state.failedRegistration ? <FormText>Email already in use</FormText> : ""}
+        </div>
+        
         <p className="forgot-password text-right">
-          Already registered <a href="/login">sign in?</a>
+          Already registered? <a href="/login">Sign in</a>
         </p>
       </Form></div></div>
     )

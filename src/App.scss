@@ -37,6 +37,10 @@ body, html, .App, #root, .auth-wrapper {
   transition: all .3s;
 }
 
+.auth-inner button {
+  width: 100%;
+}
+
 .auth-wrapper .form-control:focus {
   border-color: #167bff;
   box-shadow: none;
