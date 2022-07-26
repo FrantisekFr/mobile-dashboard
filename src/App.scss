@@ -20,7 +20,7 @@ body, html, .App, #root, .auth-wrapper {
   height: 100%;
 }
 
-// Signup & other forms 
+// Forms 
 .auth-wrapper {
   display: flex;
   justify-content: center;
@@ -119,13 +119,9 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 // Overwrites 
-
-
 .navbar-light {
   background-color: #232426;
 }
-
-
 
 .btn-primary {
   background-color: #232426;

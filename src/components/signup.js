@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Navigate, Link } from "react-router-dom";
 import axios from 'axios';
 import {Form, Button, FormText, Input, FormFeedback} from 'reactstrap';
 import {storageSave, storageLoad} from "../storage";
@@ -9,7 +10,8 @@ export default class SignUp extends Component {
     email: "",
     password: "",        
     emailValid: false,
-    failedRegistration: false
+    failedRegistration: false,
+    registrationCompleted: false
   }
 
   validateEmail = (e) => {     
@@ -39,12 +41,11 @@ export default class SignUp extends Component {
       }
     )
     .then(response => {      
-      alert(response)
       if(response.error){
-        this.state({ failedRegistration: true, email: '', password: '' })
+        this.setState({ failedRegistration: true, email: '', password: '' })
       } else {
         storageSave('klaviyoUser', response.data)  
-        this.props.toggle()
+        this.setState({ registrationCompleted: true })
       }
     })
     .catch(error => {
@@ -54,45 +55,45 @@ export default class SignUp extends Component {
 
   render() {
     return (
+      this.state.registrationCompleted ? <Navigate to="/configure-key" replace={true} /> :
+      
       <div className="auth-wrapper">
           <div className="auth-inner">
-      <Form onSubmit={this.submitRegistrationForm}>
-        <h3>Sign Up</h3>        
-        <div className="mb-3">
-          <label>Email address</label>
-          <Input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={this.state.email}
-            onChange={e => this.validateEmail(e)}              
-            {...(this.state.email.length > 0 ? 
-              this.state.emailValid ? {valid: true} : {invalid: true} : "")}                  
-            />     
-          <FormFeedback{...(this.state.email.length > 0 ? 
-                     this.state.emailValid ? {valid: true} : {invalid: true} : "")}>{this.state.emailValid ? "Valid email format" : "Invalid email format"}</FormFeedback>
+            <Form onSubmit={this.submitRegistrationForm}>
+              <h3>Sign Up</h3>        
+              <div className="mb-3">
+                <label>Email address</label>
+                <Input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter email"
+                  value={this.state.email}
+                  onChange={e => this.validateEmail(e)}              
+                  {...(this.state.email.length > 0 ? this.state.emailValid ? {valid: true} : {invalid: true} : "")} />     
+                <FormFeedback{...(this.state.email.length > 0 ? this.state.emailValid ? {valid: true} : {invalid: true} : "")}>{this.state.emailValid ? "Valid email format" : "Invalid email format"}</FormFeedback>
+              </div>
+              <div className="mb-3">
+                <label>Password</label>
+                <Input
+                  type="password"
+                  className="form-control"
+                  value={this.state.password}
+                  onChange={e => this.handlePasswordInput(e)}  
+                  placeholder="Enter password"
+                />
+              </div>
+              <div>
+                <Button {...(this.state.email !== "" && this.state.password !== "" && this.state.emailValid? {enabled: true} : {disabled: true}) } type="submit">Submit</Button>                    
+              </div>
+              <div className="row">
+                {this.state.failedRegistration ? <FormText>Email already in use</FormText> : ""}
+              </div>              
+              <p className="forgot-password text-right">
+                Already registered? <Link to={'/login'}>Login</Link>
+              </p>
+            </Form>
+          </div>
         </div>
-        <div className="mb-3">
-          <label>Password</label>
-          <Input
-            type="password"
-            className="form-control"
-            value={this.state.password}
-            onChange={e => this.handlePasswordInput(e)}  
-            placeholder="Enter password"
-          />
-        </div>
-        <div>
-          <Button {...(this.state.email !== "" && this.state.password !== "" && this.state.emailValid? {enabled: true} : {disabled: true}) } type="submit">Submit</Button>                    
-        </div>
-        <div className="row">
-          {this.state.failedRegistration ? <FormText>Email already in use</FormText> : ""}
-        </div>
-        
-        <p className="forgot-password text-right">
-          Already registered? <a href="/login">Sign in</a>
-        </p>
-      </Form></div></div>
     )
   }
 }
