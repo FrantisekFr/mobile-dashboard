@@ -4,6 +4,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   background: white !important;
   min-height: 100vh;
@@ -11,13 +12,28 @@ body {
   font-weight: 400;
   font-family: 'Fira Sans', sans-serif;
 }
+
 h1,h2,h3,h4,h5,h6,label,span {
   font-weight: 500;
   font-family: 'Fira Sans', sans-serif;
 }
+
 body, html, .App, #root, .auth-wrapper {
   width: 100%;
   height: 100%;
+}
+
+// Main navigation
+#main-navigation .nav-item a{
+  color: white!important;
+}
+
+#main-navigation .navbar-nav .active {
+  color:red!important; 
+}
+
+.navbar-light {
+  background-color: #232426;
 }
 
 // Forms 
@@ -45,59 +61,52 @@ body, html, .App, #root, .auth-wrapper {
   border-color: #167bff;
   box-shadow: none;
 }
+
 .auth-wrapper h3 {
   text-align: center;
   margin: 0;
   line-height: 1;
   padding-bottom: 20px;
 }
+
 .custom-control-label {
   font-weight: 400;
 }
 
-.forgot-password,
-.forgot-password a {
+.switch-forms,
+.switch-forms a {
   text-align: right;
   font-size: 13px;
   padding-top: 10px;
   color: #7f7d7d;
   margin: 0;
 }
-.forgot-password a {
+
+.switch-forms a {
   color: #167bff;
 }
 
-// Dashboard
-.nav-item a{
-  color: white!important;
-}
-
-#dashboard-navbar .nav-item a {
-  color: #232426!important;  
-}
-
-#dashboard-navbar .navbar-nav .active-tab {
-  background: #232426;
-  border-radius:25px;
-}
-
-#dashboard-navbar .navbar-nav .active-tab .nav-link {
-  color:white!important;
-}
-
-.auth-inner-dashboard {
-  width: 100%;
-  height: 100%;
-  padding: 55px 0px 0px 0px;
-}
-
-.dashboard-navbar {
+// Dashboard - navigation
+#dashboard-navigation {
   background-color: #FFFAF3;
   width: 100%;
 }
 
-#dashboard-navbar .navbar-nav .nav-link {
-  color: black;
+#dashboard-navigation a {
+  color: #232426;  
+}
+
+#dashboard-navigation .navbar-nav .active {
+  background: #232426;
+  border-radius:25px;
+  color: white;
+}
+
+// Dashboard components - campaigns, activity, key
+.auth-inner-dashboard {
+  width: 100%;
+  height: 100%;
+  padding: 55px 0px 0px 0px;
 }
 
 .campaign {
@@ -105,9 +114,9 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .accordion-button {
-  background-color: #91979F!important;
-  color: #232426!important;
-  border-color: #232426!important;    
+  background-color: #91979F;
+  color: #232426;
+  border-color: #232426;    
 }
 
 .activity-container{
@@ -118,11 +127,7 @@ body, html, .App, #root, .auth-wrapper {
   margin-bottom: 10px;
 }
 
-// Overwrites 
-.navbar-light {
-  background-color: #232426;
-}
-
+// Overwrite default Bootstrap styles
 .btn-primary {
   background-color: #232426;
   border-color: #232426;

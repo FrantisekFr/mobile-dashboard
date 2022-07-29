@@ -1,11 +1,11 @@
 
 
-export const storageSave = (key, obj, storage) => {
+export const storageSave = (key, str, storage) => {
    if(!storage){
       storage = 'sessionStorage';
    }
     if (check(storage)) {
-       window[storage][key] = JSON.stringify(obj);
+       window[storage][key] = str;
     }
 }
 

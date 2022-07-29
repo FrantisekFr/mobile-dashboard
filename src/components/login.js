@@ -3,6 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import {Form, Button, FormText, Input, FormFeedback} from 'reactstrap';
 import axios from 'axios';
 import {storageSave, storageLoad} from "../storage";
+import { authenticateUser } from '../authenticate'
 
 export default class Login extends Component {
 
@@ -40,15 +41,13 @@ export default class Login extends Component {
       url: 'http://localhost:3000/auth/signin',
       data: {        
           email: this.state.email,
-          // password: this.state.password  
-          // Test - it seems that password is not being processed correctly
-          password: ''
+          password: this.state.password            
         }                
       }
     )
     .then(response => {
       if (response.data.email && response.data.id){    
-        storageSave('klaviyoUser', response.data)
+        storageSave('klaviyoUser', response.data.email);
         this.setState( {authorized: true }) 
       }      
     })
@@ -57,9 +56,13 @@ export default class Login extends Component {
     })  
   }
   
+  componentDidMount() {
+    this.setState({ authorized: authenticateUser() })   
+  }
+
   render() {
     return (
-      this.state.authorized ? <Navigate to="/dashboard" replace={true} /> :
+       this.state.authorized ? <Navigate to="/campaigns" replace={true} /> :
       
       <div className="auth-wrapper">
           <div className="auth-inner">
@@ -92,7 +95,7 @@ export default class Login extends Component {
               <div className="row">
                 {this.state.invalidLogin ? <FormText>Invalid username or password</FormText> : ""}
               </div>
-              <p className="forgot-password text-right">
+              <p className="switch-forms text-right">
                 Don't have an account yet? <Link to={'/sign-up'}>Sign Up</Link>
               </p>              
             </Form>

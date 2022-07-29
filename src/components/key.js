@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { Navigate } from "react-router-dom";
 import {Form, Button, FormText, Input, FormFeedback} from 'reactstrap';
+import { authenticateUser } from '../authenticate';
+import DashboardNavigation from './dashboardnavigation'
 
 export default class Key extends Component {
 
   state = {
     publicKey: '',
     privateKey: '',
-    keysConfigured: false
+    keysConfigured: false    
   }
 
   setPublicKey = (event) => {
@@ -25,9 +27,15 @@ export default class Key extends Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({ userLoggedIn: authenticateUser() })   
+  }
+
   render() {
     return (
-      this.state.keysConfigured ? <Navigate to="/dashboard" replace={true} /> :
+      <div className="auth-wrapper dashboard">
+       <div className="auth-inner auth-inner-dashboard">
+              <DashboardNavigation/>    
       <div className="auth-wrapper">
           <div className="auth-inner">
             <Form onSubmit={this.submitForm}>
@@ -57,7 +65,7 @@ export default class Key extends Component {
               </div>        
           </Form>
         </div>
-      </div>
+      </div></div></div>
     )
   }
 }

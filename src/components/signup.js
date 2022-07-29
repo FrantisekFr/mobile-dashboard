@@ -3,6 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import axios from 'axios';
 import {Form, Button, FormText, Input, FormFeedback} from 'reactstrap';
 import {storageSave, storageLoad} from "../storage";
+import { authenticateUser } from '../authenticate'
 
 export default class SignUp extends Component {
 
@@ -11,7 +12,8 @@ export default class SignUp extends Component {
     password: "",        
     emailValid: false,
     failedRegistration: false,
-    registrationCompleted: false
+    registrationCompleted: false,
+    userLoggedIn: false
   }
 
   validateEmail = (e) => {     
@@ -30,7 +32,7 @@ export default class SignUp extends Component {
   }
 
   submitRegistrationForm = (event) => {
-    event.preventDefault();
+    event.preventDefault(); 
     axios({
       method: 'POST',
       url: 'http://localhost:3000/auth/signup',
@@ -44,7 +46,7 @@ export default class SignUp extends Component {
       if(response.error){
         this.setState({ failedRegistration: true, email: '', password: '' })
       } else {
-        storageSave('klaviyoUser', response.data)  
+        storageSave('klaviyoUser', response.data.email)  
         this.setState({ registrationCompleted: true })
       }
     })
@@ -53,9 +55,12 @@ export default class SignUp extends Component {
     })  
   }
 
+  componentDidMount() {
+    this.setState({ userLoggedIn: authenticateUser() })   
+  }
   render() {
     return (
-      this.state.registrationCompleted ? <Navigate to="/configure-key" replace={true} /> :
+      this.state.userLoggedIn ? <Navigate to="/dashboard" replace={true} /> : this.state.registrationCompleted ? <Navigate to="/configure-key" replace={true} /> :
       
       <div className="auth-wrapper">
           <div className="auth-inner">
@@ -88,7 +93,7 @@ export default class SignUp extends Component {
               <div className="row">
                 {this.state.failedRegistration ? <FormText>Email already in use</FormText> : ""}
               </div>              
-              <p className="forgot-password text-right">
+              <p className="switch-forms text-right">
                 Already registered? <Link to={'/login'}>Login</Link>
               </p>
             </Form>

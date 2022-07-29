@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
+import DashboardNavigation from './dashboardnavigation'
+
 export default class Campaign extends Component {
   render() {
     return (
+      <div className="auth-wrapper dashboard">
+        <div className="auth-inner auth-inner-dashboard">
+      <DashboardNavigation/>
       <table className="table campaigns container">
         <thead>
           <tr>
@@ -32,6 +37,8 @@ export default class Campaign extends Component {
           </tr>
         </tbody>
       </table>
+      </div>
+      </div>
     )
   }
 }
